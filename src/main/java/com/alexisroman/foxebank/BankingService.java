@@ -11,20 +11,28 @@ public class BankingService {
     @Autowired
     private TransactionRepository transactionRep;
 
-    public void cashIn (Long userId, Double amount){
-        User user = userRep.findById(userId).orElseThrow();
-        user.setBalance(user.getBalance() + amount);
-        userRep.save(user);
-        transactionRep.save(new Transaction("Cash In: " ,amount,  user));
+    public void cashIn(Long receiverId, Long senderId, Double amount){
+        User receiver = userRep.findById(receiverId).orElseThrow();
+        User sender = userRep.findById(senderId).orElseThrow();
 
+        //user RECEIVES money
+        receiver.setBalance(receiver.getBalance() + amount);
+        userRep.save(receiver);
+
+        //transaction record
+        transactionRep.save(new Transaction("Cash In: ", amount, sender, receiver));
     }
 
-    public void cashOut (Long userId, Double amount){
-        User user = userRep.findById(userId).orElseThrow();
-        user.setBalance(user.getBalance() - amount);
-        userRep.save(user);
-        transactionRep.save(new Transaction("Cash Out: ", amount, user));
+    public void cashOut(Long senderId, Long receiverId, Double amount){
+        User sender = userRep.findById(senderId).orElseThrow();
+        User receiver = userRep.findById(receiverId).orElseThrow();
 
+        //user SENDS money
+        sender.setBalance(sender.getBalance() - amount);
+        userRep.save(sender);
+
+        //transaction record
+        transactionRep.save(new Transaction("Cash Out: ", amount, sender, receiver));
     }
 
 }
