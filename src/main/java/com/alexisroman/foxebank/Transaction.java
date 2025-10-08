@@ -23,4 +23,41 @@ public class Transaction {
         this.amount = amount;
         this.timestamp = timestamp;
     }
+
+    //GETTERS HERE
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+
+    //SETTERS HERE
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

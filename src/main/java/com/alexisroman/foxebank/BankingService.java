@@ -1,5 +1,18 @@
 package com.alexisroman.foxebank;
 
-public class BankingService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
+public class BankingService {
+    @Autowired
+    private UserRepository userRep;
+
+    @Autowired
+    private TransactionRepository transactionRep;
+
+    public void cashIn (Long userId, Double amount){
+//        User user = userRep.findById(userId).orElseThrow();
+
+    }
 }

@@ -27,4 +27,48 @@ public class User {
         this.password = password;
         this.balance = balance;
     }
+
+    //GETTERS HERE
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    //SETTERS HERE
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 }
+
+
