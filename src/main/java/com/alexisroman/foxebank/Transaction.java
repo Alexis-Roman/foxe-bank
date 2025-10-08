@@ -18,10 +18,11 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(String action, Double amount, LocalDateTime timestamp) {
+    public Transaction(String action, Double amount, User user) {
         this.action = action;
         this.amount = amount;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now();
+        this.user = user;
     }
 
     //GETTERS HERE
