@@ -1,36 +1,28 @@
-package com.alexisroman.foxebank;
-
-import jakarta.persistence.*;
+package com.alexisroman.foxebank.dto;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+public class SignupRequest {
     private String name;
     private String email;
     private LocalDate birthday;
+
     private String password;
-    private Double balance;
+    private String confirmPassword;
 
-    public User(){}
+    //CONSTRUCTORS
+    public SignupRequest() {
+    }
 
-    public User(String name, String email, LocalDate birthday, String password, Double balance) {
+    public SignupRequest(String name, String email, LocalDate birthday, String password, String confirmPassword) {
         this.name = name;
         this.email = email;
         this.birthday = birthday;
         this.password = password;
-        this.balance = balance;
+        this.confirmPassword = confirmPassword;
     }
 
-    //GETTERS HERE
-    public Long getUserId() {
-        return userId;
-    }
-
+    //GETTERS
     public String getName() {
         return name;
     }
@@ -47,11 +39,12 @@ public class User {
         return password;
     }
 
-    public Double getBalance() {
-        return balance;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    //SETTERS HERE
+    //SETTERS
+
     public void setName(String name) {
         this.name = name;
     }
@@ -64,9 +57,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
-
-

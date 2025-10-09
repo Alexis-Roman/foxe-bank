@@ -1,4 +1,4 @@
-package com.alexisroman.foxebank;
+package com.alexisroman.foxebank.entity;
 
 import jakarta.persistence.*;
 
