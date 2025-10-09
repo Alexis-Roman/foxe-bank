@@ -37,7 +37,10 @@ public class AuthService {
                 request.getBirthday(), request.getPassword(), 0.0
         );
 
-        return "Sign In Successful!";
+        //save user info to db
+        userRep.save(user);
+
+        return "Account Created Successful!";
     }
 
     //Login
