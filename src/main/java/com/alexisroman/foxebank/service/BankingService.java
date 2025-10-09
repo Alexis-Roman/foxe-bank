@@ -2,8 +2,8 @@ package com.alexisroman.foxebank.service;
 
 import com.alexisroman.foxebank.repository.TransactionRepository;
 import com.alexisroman.foxebank.repository.UserRepository;
-import com.alexisroman.foxebank.model.Transaction;
-import com.alexisroman.foxebank.model.User;
+import com.alexisroman.foxebank.entity.Transaction;
+import com.alexisroman.foxebank.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

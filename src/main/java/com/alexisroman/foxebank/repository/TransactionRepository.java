@@ -1,7 +1,7 @@
 package com.alexisroman.foxebank.repository;
 
-import com.alexisroman.foxebank.model.Transaction;
-import com.alexisroman.foxebank.model.User;
+import com.alexisroman.foxebank.entity.Transaction;
+import com.alexisroman.foxebank.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

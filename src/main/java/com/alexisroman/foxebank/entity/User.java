@@ -1,4 +1,4 @@
-package com.alexisroman.foxebank.model;
+package com.alexisroman.foxebank.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
