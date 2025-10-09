@@ -37,15 +37,20 @@ public class BankingService {
         User sender = userRep.findById(senderId).orElseThrow();
         User receiver = userRep.findById(receiverId).orElseThrow();
 
-        //user SENDS money
-        sender.setBalance(sender.getBalance() - amount);
-        userRep.save(sender);
+        if (sender.getBalance()>= amount){
+            //user SENDS money
+            sender.setBalance(sender.getBalance() - amount);
+            userRep.save(sender);
 
-        receiver.setBalance(receiver.getBalance() + amount);
-        userRep.save(receiver);
+            receiver.setBalance(receiver.getBalance() + amount);
+            userRep.save(receiver);
 
-        //transaction record
-        transactionRep.save(new Transaction("Cash Out: ", amount, sender, receiver));
+            //transaction record
+            transactionRep.save(new Transaction("Cash Out: ", amount, sender, receiver));
+
+        }else
+            throw new IllegalArgumentException("Insufficient balance.");
+
     }
 
 }
