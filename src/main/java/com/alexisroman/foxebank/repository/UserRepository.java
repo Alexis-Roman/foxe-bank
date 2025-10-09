@@ -1,5 +1,6 @@
-package com.alexisroman.foxebank;
+package com.alexisroman.foxebank.repository;
 
+import com.alexisroman.foxebank.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

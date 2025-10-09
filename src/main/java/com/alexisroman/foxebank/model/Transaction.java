@@ -1,4 +1,4 @@
-package com.alexisroman.foxebank;
+package com.alexisroman.foxebank.model;
 
 import jakarta.persistence.*;
 
