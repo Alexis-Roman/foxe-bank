@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/transaction")
 public class UserController {
     @Autowired
     private BankingService bankingService;
@@ -14,14 +14,14 @@ public class UserController {
     public  String cashIn (@PathVariable Long receiverId, @RequestParam Long senderId, @RequestParam Double amount){
         bankingService.cashIn(receiverId, senderId, amount);
         return "Cash In successful! You received ₱" + amount
-                + "from user " + senderId;
+                + " from user " + senderId;
     }
 
     //CASH OUT
-    @PostMapping("/{senderId} /cashout")
+    @PostMapping("/{senderId}/cashout")
     public  String cashOut (@PathVariable Long senderId, @RequestParam Long receiverId, @RequestParam Double amount){
         bankingService.cashOut(senderId, receiverId, amount);
         return "Cash Out successful! You sent ₱" + amount
-                + "to user " + senderId;
+                + " to user " + receiverId;
     }
 }
