@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Flex, Box, Heading, Button, Text, Input, VStack } from "@chakra-ui/react";
 import { Field } from "@chakra-ui/react";
 
 function LoginPage() {
+    const navigate = useNavigate();
   return (
     <Flex h="100vh" bg="gray.900" color="white">
       {/* Left Section */}
@@ -16,7 +18,7 @@ function LoginPage() {
         p={10}
       >
         <Heading mb={4}>Don’t have an account yet?</Heading>
-        <Button colorScheme="red">Sign up</Button>
+        <Button colorScheme="red" onClick={() => navigate("/signup")}>Sign up</Button>
       </Flex>
 
       {/* Right Section */}

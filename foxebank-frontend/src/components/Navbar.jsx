@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Flex, Box, Text, Heading, Button, HStack, Spacer } from "@chakra-ui/react";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <Flex
       as="nav"
@@ -48,10 +51,12 @@ function Navbar() {
 
       {/* Right Section — Buttons */}
       <HStack spacing={4}>
-        <Button variant="outline" colorScheme="red">
+        <Button variant="outline" colorScheme="red" onClick={() => navigate("/login")}>
           Login
         </Button>
-        <Button colorScheme="red">Sign Up</Button>
+        <Button colorScheme="red" onClick={() => navigate("/signup")}>
+          Sign Up
+        </Button>
       </HStack>
     </Flex>
   );
