@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import LandingPage from './components/Landing';
+import Sidebar from './components/Sidebar';
+import DashboardPage from './components/DashboardPage';
 // import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
 // import Dashboard from './components/Dashboard';
@@ -18,6 +20,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/landing" element={<LandingPage />} />
+        <Route path="/sidebar" element={<Sidebar />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </Router>
 
