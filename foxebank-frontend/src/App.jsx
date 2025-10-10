@@ -3,11 +3,11 @@ import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-// import './App.css';
+import Dashboard from './components/Dashboard';
+import SendMoney from './components/SendMoney';
+import History from './components/history';
 
 import React from "react";
-import { Box, Flex, Spacer } from "@chakra-ui/react"
-
 
 function App() {
   return (
@@ -15,7 +15,11 @@ function App() {
       <LoginPage/>
       <SignupPage/>
       <Navbar/>
+      <Dashboard/>
       <Footer/>
+      <SendMoney/>
+      <History/>
+      
     </div>
   );
 }
