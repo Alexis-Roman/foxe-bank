@@ -9,7 +9,7 @@ import SendMoney from './components/SendMoney';
 // import Footer from './components/Footer';
 // import Dashboard from './components/Dashboard';
 // import SendMoney from './components/SendMoney';
-// import History from './components/history';
+import History from './components/history';
 
 import React from "react";
 
@@ -24,6 +24,7 @@ function App() {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/sendmoney" element={<SendMoney />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </Router>
 

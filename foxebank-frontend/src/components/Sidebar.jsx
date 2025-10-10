@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, VStack, Button, Heading, Spacer } from "@chakra-ui/react";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   return (
     <Box
       h="100vh"
@@ -34,6 +36,7 @@ export default function Sidebar() {
           justifyContent="center"
           bg="gray.700"
           _hover={{ bg: "gray.600" }}
+          onClick={() => navigate("/history")}
         >
           Transactions
         </Button>
