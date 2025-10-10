@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Flex, Heading, Button, Input, VStack } from "@chakra-ui/react";
 import { Field } from "@chakra-ui/react";
 
-function SignUpPage() {
+function SignupPage() {
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = async () => {
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -20,26 +23,26 @@ function SignUpPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: username,
-        birthday: birthday,
+        birthday,
         email,
         password,
-        confirmPassword
-      })
+        confirmPassword,
+      }),
     });
 
-    const data = await res.json();
-    console.log("Signup response:", data);
+    const text = await res.text(); // backend returns plain text
+    console.log("Signup response:", text);
 
-    if (res.ok) {
+    if (res.ok && text.includes("Successful")) {
       alert("Signup successful!");
+      navigate("/login");
     } else {
-      alert("Signup failed: " + data);
+      alert("Signup failed: " + text);
     }
   };
 
   return (
     <Flex h="100vh" bg="gray.900" color="white">
-      
       {/* Right Section */}
       <Flex w="65%" h="100%" bg="gray.700" align="center" justify="center" p={10}>
         <VStack spacing={4} w="full" maxW="400px">
@@ -92,20 +95,29 @@ function SignUpPage() {
             />
           </Field.Root>
 
-          <Button colorScheme="red" mt={2} onClick={handleSubmit}>
+          <Button colorScheme="red" mt={2} onClick={handleSignup}>
             Sign Up
           </Button>
         </VStack>
       </Flex>
 
       {/* Left Section */}
-      <Flex w="35%" h="100%" bg="gray.800" align="center" justify="center" direction="column" p={10}>
+      <Flex
+        w="35%"
+        h="100%"
+        bg="gray.800"
+        align="center"
+        justify="center"
+        direction="column"
+        p={10}
+      >
         <Heading mb={4}>Already have an account?</Heading>
-        <Button colorScheme="red">Login</Button>
+        <Button colorScheme="red" onClick={() => navigate("/login")}>
+          Login
+        </Button>
       </Flex>
-
     </Flex>
   );
 }
 
-export default SignUpPage;
+export default SignupPage;
