@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import SendMoney from "./SendMoney";
 
 function Action() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function Action() {
           <Button
             bg="tomato"
             w="150px"
-            onClick={() => navigate("/send-money")}
+            onClick={() => navigate("/SendMoney")}
           >
             Send Money
           </Button>

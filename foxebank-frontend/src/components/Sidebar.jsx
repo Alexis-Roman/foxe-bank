@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <Box
       h="100vh"
-      w="260px"
+      w="320px"
       bg="gray.800"
       color="white"
       display="flex"
