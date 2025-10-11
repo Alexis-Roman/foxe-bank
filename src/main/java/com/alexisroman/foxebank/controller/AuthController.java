@@ -5,6 +5,7 @@ import com.alexisroman.foxebank.dto.LoginResponse;
 import com.alexisroman.foxebank.dto.SignupRequest;
 import com.alexisroman.foxebank.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -15,12 +16,14 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupRequest request){
-        return authService.signUp(request);
+    public ResponseEntity<String> signup(@RequestBody SignupRequest request) {
+        String message = authService.signUp(request);
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/login")
-    public LoginResponse login (@RequestBody LoginRequest request){
-        return authService.login(request);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 }

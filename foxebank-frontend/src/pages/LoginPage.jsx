@@ -15,33 +15,33 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+ const handleLogin = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const text = await response.text(); // backend returns plain text
+    const data = await response.json(); // backend now returns JSON
+    alert(data.message); // show backend message
 
-      alert(text); // simple feedback
+    if (data.success) {
+      // Store user info after successful login
+      localStorage.setItem("userId", data.userId); // make sure your backend returns this!
+      localStorage.setItem("username", data.name);
+      localStorage.setItem("balance", data.balance);
 
-        if (text.startsWith("Welcome")) {
-          const [_, rest] = text.split("Welcome ");
-          const [username, balance] = rest.split(",");
-          localStorage.setItem("username", username.trim());
-          localStorage.setItem("balance", balance.trim());
-          navigate("/dashboard");
-        }
-
-
-
-    } catch (error) {
-      console.error("Error during login:", error);
-      alert("Login failed. Please try again.");
+      navigate("/dashboard");
     }
-  };
+
+  } catch (error) {
+    console.error("Error during login:", error);
+    alert("Login failed. Please try again.");
+  }
+};
+
+
 
   return (
     <Flex h="100vh" bg="gray.900" color="white">

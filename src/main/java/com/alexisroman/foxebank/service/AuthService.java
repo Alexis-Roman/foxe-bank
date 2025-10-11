@@ -48,17 +48,16 @@ public class AuthService {
     public LoginResponse login(LoginRequest request) {
         Optional<User> findUser = userRep.findByEmail(request.getEmail());
         if (findUser.isEmpty()) {
-            return new LoginResponse(false, "User does not exist!", null, 0.0);
+            return new LoginResponse(false, "User does not exist!", null,null, 0.0);
         }
 
         User user = findUser.get();
 
         if (!user.getPassword().equals(request.getPassword())) {
-            return new LoginResponse(false, "Wrong password", null, 0.0);
+            return new LoginResponse(false, "Wrong password", null, null, 0.0);
         }
 
-        // Return success response including username and balance
-        return new LoginResponse(true, "Login successful!", user.getName(), user.getBalance());
+        return new LoginResponse(true, "Login successful!",user.getUserId(), user.getName(), user.getBalance());
 
     }
 

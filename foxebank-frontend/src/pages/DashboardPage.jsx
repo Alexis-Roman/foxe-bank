@@ -6,7 +6,7 @@ import Action from "../components/Action";
 
 export default function DashboardPage() {
   const username = localStorage.getItem("username") || "User";
-  const totalSavings = localStorage.getItem("balance") || 0;
+  const totalSavings = parseFloat(localStorage.getItem("balance")) || 0;
 
   return (
     <Flex minH="100vh" bg="gray.900" color="white">

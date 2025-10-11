@@ -5,10 +5,7 @@ import LandingPage from './components/Landing';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';
-// import Navbar from './components/Navbar';
-// import Footer from './components/Footer';
-// import Dashboard from './components/Dashboard';
-// import SendMoney from './components/SendMoney';
+
 import History from './components/history';
 
 import React from "react";
@@ -17,7 +14,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/landing" />} /> {/* default redirect */}
+        <Route path="/" element={<Navigate to="/landing" />} /> {/* default */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/landing" element={<LandingPage />} />
@@ -28,16 +25,6 @@ function App() {
       </Routes>
     </Router>
 
-    // <div className='App'>
-    //   {/* <LoginPage/> */}
-    //   <SignupPage/>
-    //   {/* <Navbar/>
-    //   <Dashboard/>
-    //   <Footer/>
-    //   <SendMoney/>
-    //   <History/> */}
-
-    // </div>
   );
 }
 
