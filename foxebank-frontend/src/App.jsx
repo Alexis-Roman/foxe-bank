@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './components/LoginPage';
-import SignupPage from './components/SignupPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import LandingPage from './components/Landing';
 import Sidebar from './components/Sidebar';
-import DashboardPage from './components/DashboardPage';
+import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';
 // import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
