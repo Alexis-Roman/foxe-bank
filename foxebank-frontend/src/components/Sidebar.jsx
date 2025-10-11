@@ -43,7 +43,7 @@ export default function Sidebar() {
           justifyContent="center"
           bg="gray.700"
           _hover={{ bg: "gray.600" }}
-          onClick={() => navigate("/history")}
+          onClick={() => navigate("/transactions")}
         >
           Transactions
         </Button>

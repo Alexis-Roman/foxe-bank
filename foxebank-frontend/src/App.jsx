@@ -5,6 +5,7 @@ import LandingPage from './components/Landing';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';
+import TransactionPage from './pages/TransactionPage';
 
 import History from './components/history';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/sendmoney" element={<SendMoney />} />
         <Route path="/history" element={<History />} />
+        <Route path="/transactions" element={<TransactionPage />} />
       </Routes>
     </Router>
 
