@@ -1,6 +1,7 @@
 package com.alexisroman.foxebank.service;
 
 import com.alexisroman.foxebank.dto.LoginRequest;
+import com.alexisroman.foxebank.dto.LoginResponse;
 import com.alexisroman.foxebank.dto.SignupRequest;
 import com.alexisroman.foxebank.entity.User;
 import com.alexisroman.foxebank.repository.UserRepository;
@@ -44,19 +45,22 @@ public class AuthService {
     }
 
     //Login
-    public String login(LoginRequest request){
+    public LoginResponse login(LoginRequest request) {
         Optional<User> findUser = userRep.findByEmail(request.getEmail());
-        if (findUser.isEmpty()){
-            return "User does not exist!";
+        if (findUser.isEmpty()) {
+            return new LoginResponse(false, "User does not exist!", null, 0.0);
         }
 
         User user = findUser.get();
 
-        if (!user.getPassword().equals(request.getPassword())){
-            return "Wrong Password";
+        if (!user.getPassword().equals(request.getPassword())) {
+            return new LoginResponse(false, "Wrong password", null, 0.0);
         }
 
-        return "Welcome " + user.getName();
+        // Return success response including username and balance
+        return new LoginResponse(true, "Login successful!", user.getName(), user.getBalance());
+
     }
+
 
 }

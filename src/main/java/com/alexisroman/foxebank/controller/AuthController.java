@@ -1,6 +1,7 @@
 package com.alexisroman.foxebank.controller;
 
 import com.alexisroman.foxebank.dto.LoginRequest;
+import com.alexisroman.foxebank.dto.LoginResponse;
 import com.alexisroman.foxebank.dto.SignupRequest;
 import com.alexisroman.foxebank.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login (@RequestBody LoginRequest request){
+    public LoginResponse login (@RequestBody LoginRequest request){
         return authService.login(request);
     }
 }

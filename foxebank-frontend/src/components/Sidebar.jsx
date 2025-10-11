@@ -1,9 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, VStack, Button, Heading, Spacer } from "@chakra-ui/react";
+import { Box, VStack, Button, Heading } from "@chakra-ui/react";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear(); // remove all stored user data
+    navigate("/"); // redirect to login page
+  };
+
   return (
     <Box
       h="100vh"
@@ -27,6 +33,7 @@ export default function Sidebar() {
           justifyContent="center"
           bg="gray.700"
           _hover={{ bg: "gray.600" }}
+          onClick={() => navigate("/dashboard")}
         >
           Dashboard
         </Button>
@@ -49,6 +56,7 @@ export default function Sidebar() {
           justifyContent="center"
           colorScheme="red"
           variant="solid"
+          onClick={handleLogout}
         >
           Logout
         </Button>
