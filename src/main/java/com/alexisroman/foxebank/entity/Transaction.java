@@ -83,4 +83,8 @@ public class Transaction {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }

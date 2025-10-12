@@ -1,17 +1,12 @@
 import { Box, Flex, Heading, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import SendMoney from "./SendMoney";
 
 function Action() {
-  const navigate = useNavigate();
+  const [showSendMoney, setShowSendMoney] = useState(false);
 
   return (
-     <Flex
-      w="100%"
-      justify="center"
-      align="center"
-      mt={10}
-    >
+    <Flex w="100%" justify="center" align="center" mt={10}>
       <Box
         w="100%"
         maxW="600px"
@@ -29,18 +24,24 @@ function Action() {
           <Button
             bg="tomato"
             w="150px"
-            onClick={() => navigate("/SendMoney")}
+            onClick={() => setShowSendMoney(!showSendMoney)}
           >
-            Send Money
+            {showSendMoney ? "Close" : "Send Money"}
           </Button>
           <Button
             colorScheme="gray"
             w="150px"
-            onClick={() => navigate("/request-money")}
+            onClick={() => alert("Request Money feature coming soon!")}
           >
             Request Money
           </Button>
         </Flex>
+
+        {showSendMoney && (
+          <Box mt={6}>
+            <SendMoney />
+          </Box>
+        )}
       </Box>
     </Flex>
   );

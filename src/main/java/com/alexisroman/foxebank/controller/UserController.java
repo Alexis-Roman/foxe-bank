@@ -1,6 +1,7 @@
 package com.alexisroman.foxebank.controller;
 
 import com.alexisroman.foxebank.dto.TransactionResponse;
+import com.alexisroman.foxebank.entity.User;
 import com.alexisroman.foxebank.service.BankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,17 @@ public class UserController {
     @GetMapping("/history/{userId}")
     public List<TransactionResponse> getTransactionHistory(@PathVariable Long userId) {
         return bankingService.getUserTransactions(userId);
+    }
+
+    @GetMapping("/users/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return bankingService.getUserById(userId);
+    }
+
+    // Get user info by ID
+    @GetMapping("/api/users/{userId}")
+    public User getUserById(@PathVariable Long userId) {
+        return bankingService.getUserById(userId);
     }
 
 }

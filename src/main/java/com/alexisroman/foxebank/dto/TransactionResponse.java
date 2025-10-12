@@ -9,7 +9,6 @@ public class TransactionResponse {
     private String receiver;
     private String action;
     private Double amount;
-    private Double balance;
 
     public TransactionResponse(Long transactionId, LocalDateTime dateTime,
                                String sender, String receiver, String action,
@@ -20,7 +19,6 @@ public class TransactionResponse {
         this.receiver = receiver;
         this.action = action;
         this.amount = amount;
-        this.balance = balance;
     }
 
     //GETTERS
@@ -48,7 +46,4 @@ public class TransactionResponse {
         return amount;
     }
 
-    public Double getBalance() {
-        return balance;
-    }
 }

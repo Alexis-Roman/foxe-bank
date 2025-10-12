@@ -77,7 +77,6 @@ export default function History() {
                 <th style={thStyle}>Receiver</th>
                 <th style={thStyle}>Action</th>
                 <th style={{ ...thStyle, textAlign: "right" }}>Amount</th>
-                <th style={{ ...thStyle, textAlign: "right" }}>Balance</th>
               </tr>
             </thead>
 
@@ -85,23 +84,23 @@ export default function History() {
               {transactions.map((txn) => (
                 <tr key={txn.transactionId} style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                   <td style={tdStyle}>TXN-{txn.transactionId}</td>
-                  <td style={tdStyle}>{txn.datetime}</td>
+                  <td style={tdStyle}>{new Date(txn.dateTime).toLocaleString()}</td>
                   <td style={tdStyle}>{txn.sender}</td>
                   <td style={tdStyle}>{txn.receiver}</td>
                   <td style={tdStyle}>
                     <Text
                       as="span"
                       fontWeight="bold"
-                      color={txn.action === "Cash In" ? "green.400" : "red.400"}
+                      color={txn.action === "Received" ? "green.400" : "yellow.400"}
                     >
                       {txn.action}
                     </Text>
                   </td>
                   <td style={{ ...tdStyle, textAlign: "right" }}>₱{txn.amount.toFixed(2)}</td>
-                  <td style={{ ...tdStyle, textAlign: "right" }}>₱{txn.balance.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
+
           </table>
         </Box>
       </Box>

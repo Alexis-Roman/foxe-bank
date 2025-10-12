@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alexisroman.foxebank.dto.TransactionResponse;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,42 +22,47 @@ public class BankingService {
     private TransactionRepository transactionRep;
 
     @Transactional
-    public void cashIn(Long receiverId, Long senderId, Double amount){
+    public void cashIn(Long receiverId, Long senderId, Double amount) {
         User receiver = userRep.findById(receiverId).orElseThrow();
         User sender = userRep.findById(senderId).orElseThrow();
 
-        //user RECEIVES money
+        // user RECEIVES money
         receiver.setBalance(receiver.getBalance() + amount);
         userRep.save(receiver);
 
         sender.setBalance(sender.getBalance() - amount);
         userRep.save(sender);
 
-        //transaction record
-        transactionRep.save(new Transaction("Cash In: ", amount, sender, receiver));
+        // transaction record
+        Transaction transaction = new Transaction("Cash In", amount, sender, receiver);
+        transaction.setTimestamp(LocalDateTime.now()); // set timestamp
+        transactionRep.save(transaction);
     }
 
     @Transactional
-    public void cashOut(Long senderId, Long receiverId, Double amount){
+    public void cashOut(Long senderId, Long receiverId, Double amount) {
         User sender = userRep.findById(senderId).orElseThrow();
         User receiver = userRep.findById(receiverId).orElseThrow();
 
-        if (sender.getBalance()>= amount){
-            //user SENDS money
+        if (sender.getBalance() >= amount) {
+            // user SENDS money
             sender.setBalance(sender.getBalance() - amount);
             userRep.save(sender);
 
             receiver.setBalance(receiver.getBalance() + amount);
             userRep.save(receiver);
 
-            //transaction record
-            transactionRep.save(new Transaction("Cash Out: ", amount, sender, receiver));
+            // transaction record
+            Transaction transaction = new Transaction("Cash Out", amount, sender, receiver);
+            transaction.setTimestamp(LocalDateTime.now()); // set timestamp
+            transactionRep.save(transaction);
 
-        }else
+        } else {
             throw new IllegalArgumentException("Insufficient balance.");
-
+        }
     }
 
+    // GET USER TRANSACTIONS
     //GET USER TRANSACTIONS
     public List<TransactionResponse> getUserTransactions(Long userId) {
         User user = userRep.findById(userId).orElseThrow();
@@ -71,9 +78,9 @@ public class BankingService {
                                 tx.getTimestamp(),
                                 tx.getSender().getName(),
                                 tx.getReceiver().getName(),
-                                "Cash Out",
+                                "Deposit", // renamed from "Cash Out"
                                 tx.getAmount(),
-                                tx.getSender().getBalance() // optional, can use snapshot if needed
+                                null // balance removed
                         ))
                         .collect(Collectors.toList());
 
@@ -84,9 +91,9 @@ public class BankingService {
                                 tx.getTimestamp(),
                                 tx.getSender().getName(),
                                 tx.getReceiver().getName(),
-                                "Cash In",
+                                "Received", // renamed from "Cash In"
                                 tx.getAmount(),
-                                tx.getReceiver().getBalance()
+                                null // balance removed
                         ))
                         .collect(Collectors.toList())
         );
@@ -95,6 +102,11 @@ public class BankingService {
         transactions.sort((a, b) -> b.getDateTime().compareTo(a.getDateTime()));
 
         return transactions;
+    }
+
+
+    public User getUserById(Long userId) {
+        return userRep.findById(userId).orElseThrow();
     }
 
 }
