@@ -1,36 +1,31 @@
-import React from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Heading, Text, Spinner } from "@chakra-ui/react";
 
 export default function History() {
-  const transactions = [
-    {
-      ref: "TXN-20251010001",
-      datetime: "2025-10-10 09:42 AM",
-      sender: "Alexis Roman",
-      receiver: "John Cruz",
-      amount: "₱2,000.00",
-      balance: "₱8,500.00",
-      action: "Cash Out",
-    },
-    {
-      ref: "TXN-20251008007",
-      datetime: "2025-10-08 04:15 PM",
-      sender: "Alexis Roman",
-      receiver: "Maria Dela Cruz",
-      amount: "₱1,200.00",
-      balance: "₱10,500.00",
-      action: "Cash Out",
-    },
-    {
-      ref: "TXN-20251005003",
-      datetime: "2025-10-05 11:30 AM",
-      sender: "Fox Bank Rewards",
-      receiver: "Alexis Roman",
-      amount: "₱500.00",
-      balance: "₱11,700.00",
-      action: "Cash In",
-    },
-  ];
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Get userId from localStorage
+  const userId = localStorage.getItem("userId"); 
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/transaction/history/${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch transactions");
+        }
+        const data = await response.json();
+        setTransactions(data);
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, [userId]);
 
   const thStyle = {
     textAlign: "left",
@@ -47,6 +42,14 @@ export default function History() {
     color: "white",
     whiteSpace: "nowrap",
   };
+
+  if (loading) {
+    return (
+      <Box h="100vh" display="flex" justifyContent="center" alignItems="center">
+        <Spinner size="xl" color="white" />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -80,8 +83,8 @@ export default function History() {
 
             <tbody>
               {transactions.map((txn) => (
-                <tr key={txn.ref} style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <td style={tdStyle}>{txn.ref}</td>
+                <tr key={txn.transactionId} style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <td style={tdStyle}>TXN-{txn.transactionId}</td>
                   <td style={tdStyle}>{txn.datetime}</td>
                   <td style={tdStyle}>{txn.sender}</td>
                   <td style={tdStyle}>{txn.receiver}</td>
@@ -94,8 +97,8 @@ export default function History() {
                       {txn.action}
                     </Text>
                   </td>
-                  <td style={{ ...tdStyle, textAlign: "right" }}>{txn.amount}</td>
-                  <td style={{ ...tdStyle, textAlign: "right" }}>{txn.balance}</td>
+                  <td style={{ ...tdStyle, textAlign: "right" }}>₱{txn.amount.toFixed(2)}</td>
+                  <td style={{ ...tdStyle, textAlign: "right" }}>₱{txn.balance.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

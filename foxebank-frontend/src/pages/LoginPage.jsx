@@ -23,8 +23,8 @@ function LoginPage() {
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json(); // backend now returns JSON
-    alert(data.message); // show backend message
+    const data = await response.json(); // returns JSON
+    alert(data.message);
 
     if (data.success) {
       // Store user info after successful login

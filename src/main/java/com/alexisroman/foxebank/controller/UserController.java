@@ -1,8 +1,12 @@
 package com.alexisroman.foxebank.controller;
 
+import com.alexisroman.foxebank.dto.TransactionResponse;
 import com.alexisroman.foxebank.service.BankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.alexisroman.foxebank.dto.TransactionResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -25,4 +29,10 @@ public class UserController {
         return "Cash Out successful! You sent ₱" + amount
                 + " to user " + receiverId;
     }
+
+    @GetMapping("/history/{userId}")
+    public List<TransactionResponse> getTransactionHistory(@PathVariable Long userId) {
+        return bankingService.getUserTransactions(userId);
+    }
+
 }

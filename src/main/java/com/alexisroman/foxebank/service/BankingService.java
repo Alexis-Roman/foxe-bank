@@ -7,6 +7,9 @@ import com.alexisroman.foxebank.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.alexisroman.foxebank.dto.TransactionResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BankingService {
@@ -51,6 +54,47 @@ public class BankingService {
         }else
             throw new IllegalArgumentException("Insufficient balance.");
 
+    }
+
+    //GET USER TRANSACTIONS
+    public List<TransactionResponse> getUserTransactions(Long userId) {
+        User user = userRep.findById(userId).orElseThrow();
+
+        List<Transaction> sent = transactionRep.findBySender(user);
+        List<Transaction> received = transactionRep.findByReceiver(user);
+
+        // Combine and map to DTO
+        List<TransactionResponse> transactions =
+                sent.stream()
+                        .map(tx -> new TransactionResponse(
+                                tx.getTransactionId(),
+                                tx.getTimestamp(),
+                                tx.getSender().getName(),
+                                tx.getReceiver().getName(),
+                                "Cash Out",
+                                tx.getAmount(),
+                                tx.getSender().getBalance() // optional, can use snapshot if needed
+                        ))
+                        .collect(Collectors.toList());
+
+        transactions.addAll(
+                received.stream()
+                        .map(tx -> new TransactionResponse(
+                                tx.getTransactionId(),
+                                tx.getTimestamp(),
+                                tx.getSender().getName(),
+                                tx.getReceiver().getName(),
+                                "Cash In",
+                                tx.getAmount(),
+                                tx.getReceiver().getBalance()
+                        ))
+                        .collect(Collectors.toList())
+        );
+
+        // Sort by datetime descending
+        transactions.sort((a, b) -> b.getDateTime().compareTo(a.getDateTime()));
+
+        return transactions;
     }
 
 }

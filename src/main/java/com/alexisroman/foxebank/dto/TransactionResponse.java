@@ -2,7 +2,7 @@ package com.alexisroman.foxebank.dto;
 
 import java.time.LocalDateTime;
 
-public class TransactionRequest {
+public class TransactionResponse {
     private Long transactionId;
     private LocalDateTime dateTime;
     private String sender;
@@ -11,9 +11,9 @@ public class TransactionRequest {
     private Double amount;
     private Double balance;
 
-    public TransactionRequest(Long transactionId, LocalDateTime dateTime,
-                              String sender, String receiver, String action,
-                              Double amount, Double balance) {
+    public TransactionResponse(Long transactionId, LocalDateTime dateTime,
+                               String sender, String receiver, String action,
+                               Double amount, Double balance) {
         this.transactionId = transactionId;
         this.dateTime = dateTime;
         this.sender = sender;
