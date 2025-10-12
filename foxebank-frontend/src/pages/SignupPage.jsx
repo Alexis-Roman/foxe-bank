@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Flex, Heading, Button, Input, VStack } from "@chakra-ui/react";
 import { Field } from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -14,30 +15,55 @@ function SignupPage() {
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      toaster.create({
+        title: "Passwords do not match!",
+        type: "error",
+        duration: 3000,
+      });
       return;
     }
 
-    const res = await fetch("http://localhost:8080/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: username,
-        birthday,
-        email,
-        password,
-        confirmPassword,
-      }),
-    });
+    try {
+      const res = await fetch("http://localhost:8080/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: username,
+          birthday,
+          email,
+          password,
+          confirmPassword,
+        }),
+      });
 
-    const text = await res.text(); // backend returns plain text
-    console.log("Signup response:", text);
+      const text = await res.text();
+      console.log("Signup response:", text);
 
-    if (res.ok && text.includes("Successful")) {
-      alert("Signup successful!");
-      navigate("/login");
-    } else {
-      alert("Signup failed: " + text);
+      if (res.ok && text.includes("Successful")) {
+        toaster.create({
+          title: "Signup successful!",
+          description: "Your account has been created successfully.",
+          type: "success",
+          duration: 3000,
+        });
+
+        setTimeout(() => navigate("/login"), 1000);
+      } else {
+        toaster.create({
+          title: "Signup failed",
+          description: text || "Please try again later.",
+          type: "error",
+          duration: 3000,
+        });
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      toaster.create({
+        title: "Network error",
+        description: "Unable to connect to the server.",
+        type: "error",
+        duration: 3000,
+      });
     }
   };
 
@@ -113,7 +139,7 @@ function SignupPage() {
       >
         <Heading mb={4}>Already have an account?</Heading>
         <Button colorScheme="red" onClick={() => navigate("/login")}>
-          Login  
+          Login
         </Button>
       </Flex>
     </Flex>
