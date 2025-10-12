@@ -1,9 +1,8 @@
 import { Box, Flex, Heading, Button } from "@chakra-ui/react";
-import { useState } from "react";
-import SendMoney from "./SendMoney";
+import { useNavigate } from "react-router-dom";
 
 function Action() {
-  const [showSendMoney, setShowSendMoney] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Flex w="100%" justify="center" align="center" mt={10}>
@@ -24,10 +23,11 @@ function Action() {
           <Button
             bg="tomato"
             w="150px"
-            onClick={() => setShowSendMoney(!showSendMoney)}
+            onClick={() => navigate("/sendMoney")} // matches App.jsx route below
           >
-            {showSendMoney ? "Close" : "Send Money"}
+            Send Money
           </Button>
+          
           <Button
             colorScheme="gray"
             w="150px"
@@ -36,12 +36,6 @@ function Action() {
             Request Money
           </Button>
         </Flex>
-
-        {showSendMoney && (
-          <Box mt={6}>
-            <SendMoney />
-          </Box>
-        )}
       </Box>
     </Flex>
   );
