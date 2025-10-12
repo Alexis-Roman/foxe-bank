@@ -1,9 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Flex, Box, Text, Heading, Button, HStack, Spacer } from "@chakra-ui/react";
+import { Toaster, toaster } from "@/components/ui/toaster"
 
 function Navbar() {
   const navigate = useNavigate();
+
+  const handleHomeClick = () => {
+    toaster.create({
+      title: "Welcome Home!",
+      description: "You clicked the Home button.",
+      type: "info",
+      duration: 3000,
+    });
+  };
 
   return (
     <Flex
@@ -41,7 +51,7 @@ function Navbar() {
 
       {/* Center Section — Nav Links */}
       <HStack spacing={8}>
-        <Text cursor="pointer" _hover={{ color: "red.400" }}>
+        <Text cursor="pointer" _hover={{ color: "red.400" }} onClick={handleHomeClick}>
           Home
         </Text>
         <Text cursor="pointer" _hover={{ color: "red.400" }}>

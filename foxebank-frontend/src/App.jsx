@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';
 import TransactionPage from './pages/TransactionPage';
+import { Toaster, toaster } from "@/components/ui/toaster"
 
 import History from './components/history';
 
@@ -13,7 +14,8 @@ import React from "react";
 
 function App() {
   return (
-    <Router>
+    <>
+      <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/landing" />} /> {/* default */}
         <Route path="/login" element={<LoginPage />} />
@@ -26,6 +28,10 @@ function App() {
         <Route path="/transactions" element={<TransactionPage />} />
       </Routes>
     </Router>
+
+      <Toaster />
+    </>
+    
 
   );
 }

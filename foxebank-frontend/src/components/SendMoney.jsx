@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Heading, Text, Button, VStack, Input } from "@chakra-ui/react";
+import { Toaster, toaster } from "@/components/ui/toaster"
 
 function SendMoney() {
   const [accountNumber, setAccountNumber] = useState("");
