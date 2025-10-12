@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Flex, Box, Heading, Button, Text, Input, VStack } from "@chakra-ui/react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function LandingPage() {
       </Flex>
 
       {/* Full-width Footer */}
-      <Flex w="100%" align="center" justify="center" py={4} bg="gray.800">
+      <Flex w="100%" align="center" justify="center" py={4} bg="#340C04">
         <Footer />
       </Flex>
     </Flex>

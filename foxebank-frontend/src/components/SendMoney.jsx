@@ -33,7 +33,7 @@ function SendMoney() {
       const text = await response.text()
 
       if (response.ok) {
-        // ✅ Success toast
+        // Success toast
         toaster.create({
           title: "Transaction Successful!",
           description: `You sent ₱${amt.toLocaleString()} to ${recipientName || receiverId}`,
@@ -45,7 +45,7 @@ function SendMoney() {
         const currentBalance = parseFloat(localStorage.getItem("balance")) || 0
         localStorage.setItem("balance", currentBalance - amt)
 
-        // Redirect after short delay
+        // Redirect
         setTimeout(() => navigate("/dashboard"), 1800)
       } else {
         toaster.create({
@@ -107,7 +107,6 @@ function SendMoney() {
         </Button>
       </VStack>
 
-      {/* This must be rendered somewhere in your app (can be here or globally) */}
       <Toaster />
     </Box>
   )

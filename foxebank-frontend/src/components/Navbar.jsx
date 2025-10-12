@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Flex, Box, Text, Heading, Button, HStack, Spacer } from "@chakra-ui/react";
-import { Toaster, toaster } from "@/components/ui/toaster"
+import { toaster } from "@/components/ui/toaster"
 
 function Navbar() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function Navbar() {
   return (
     <Flex
       as="nav"
-      bg="gray.900"
+      bg="#C04116"
       color="white"
       align="center"
       justify="space-between"
@@ -40,31 +40,32 @@ function Navbar() {
           F
         </Box>
         <Box lineHeight="1.2">
-          <Heading size="md" m={0}>
-            FoxeBank
+          <Heading size="md" cursor="pointer" onClick={() => navigate("/landing")} m={0}>
+            FOXe-Bank
           </Heading>
-          <Text fontSize="sm" color="gray.400">
-            Smart Banking. Simple Living.
+          <Text fontSize="sm" color="white">
+            fast online eXchange bank
           </Text>
         </Box>
       </HStack>
 
       {/* Center Section — Nav Links */}
-      <HStack spacing={8}>
+      {/* <HStack spacing={8}>
         <Text cursor="pointer" _hover={{ color: "red.400" }} onClick={handleHomeClick}>
           Home
         </Text>
         <Text cursor="pointer" _hover={{ color: "red.400" }}>
           About Us
         </Text>
-      </HStack>
+      </HStack> */}
 
       {/* Right Section — Buttons */}
       <HStack spacing={4}>
-        <Button variant="outline" colorScheme="red" onClick={() => navigate("/login")}>
+        <Button variant="outline" bg="#6A220C" _hover={{ bg: "#8B2B10" }} onClick={() => navigate("/login")}>
           Login
         </Button>
-        <Button colorScheme="red" onClick={() => navigate("/signup")}>
+        <Button variant="outline" borderColor="white" color="white"
+  _hover={{ bg: "white", color: "black" }} onClick={() => navigate("/signup")}>
           Sign Up
         </Button>
       </HStack>

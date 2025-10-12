@@ -2,8 +2,8 @@ import React from 'react';
 
 function Footer() {
     return (
-        <footer>
-            <span>&copy; {new Date().getFullYear()} Foxebank. All rights reserved.</span>
+        <footer style={{ backgroundColor: '#340C04', color: 'white' }}>
+            <span>&copy; {new Date().getFullYear()} FOXe-Bank. All rights reserved.</span>
         </footer>
     );
 }

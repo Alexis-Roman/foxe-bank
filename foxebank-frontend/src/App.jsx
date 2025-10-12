@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import LandingPage from './components/Landing';
+import LandingPage from './pages/LandingPage';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';

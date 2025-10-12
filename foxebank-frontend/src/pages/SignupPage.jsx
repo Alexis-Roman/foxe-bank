@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Flex, Heading, Button, Input, VStack } from "@chakra-ui/react";
 import { Field } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
+import Navbar from "../components/Navbar";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -68,81 +69,109 @@ function SignupPage() {
   };
 
   return (
-    <Flex h="100vh" bg="gray.900" color="white">
-      {/* Right Section */}
-      <Flex w="65%" h="100%" bg="gray.700" align="center" justify="center" p={10}>
-        <VStack spacing={4} w="full" maxW="400px">
-          <Heading>Sign Up</Heading>
+<Flex direction="column" h="100vh">
+  {/* Navbar at the top */}
+  <Navbar />
 
-          <Field.Root>
-            <Field.Label>Username</Field.Label>
-            <Input
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Field.Root>
+  {/* Main content */}
+  <Flex flex="1">
+    {/* Right Section */}
+    <Flex
+      w="65%"
+      h="100%"
+      bg="gray.700"
+      align="center"
+      justify="center"
+      p={10}
+    >
+      <VStack spacing={4} w="full" maxW="400px">
+        <Heading>Sign Up</Heading>
 
-          <Field.Root>
-            <Field.Label>Email</Field.Label>
-            <Input
-              placeholder="me@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Field.Root>
+        <Field.Root>
+          <Field.Label>Username</Field.Label>
+          <Input
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Field.Root>
 
-          <Field.Root>
-            <Field.Label>Birthday</Field.Label>
-            <Input
-              type="date"
-              value={birthday}
-              onChange={(e) => setBirthday(e.target.value)}
-            />
-          </Field.Root>
+        <Field.Root>
+          <Field.Label>Email</Field.Label>
+          <Input
+            placeholder="me@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Field.Root>
 
-          <Field.Root>
-            <Field.Label>Password</Field.Label>
-            <Input
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Field.Root>
+        <Field.Root>
+          <Field.Label>Birthday</Field.Label>
+          <Input
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+        </Field.Root>
 
-          <Field.Root>
-            <Field.Label>Confirm Password</Field.Label>
-            <Input
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Field.Root>
+        <Field.Root>
+          <Field.Label>Password</Field.Label>
+          <Input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Field.Root>
 
-          <Button colorScheme="red" mt={2} onClick={handleSignup}>
-            Sign Up
-          </Button>
-        </VStack>
-      </Flex>
+        <Field.Root>
+          <Field.Label>Confirm Password</Field.Label>
+          <Input
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Field.Root>
 
-      {/* Left Section */}
-      <Flex
-        w="35%"
-        h="100%"
-        bg="gray.800"
-        align="center"
-        justify="center"
-        direction="column"
-        p={10}
-      >
-        <Heading mb={4}>Already have an account?</Heading>
-        <Button colorScheme="red" onClick={() => navigate("/login")}>
-          Login
+        <Button
+          bg="#6A220C"
+          rounded="full"
+          paddingX="10"
+          color="white"
+          onClick={handleSignup}
+        >
+          Sign Up
         </Button>
-      </Flex>
+      </VStack>
     </Flex>
+
+    {/* Left Section */}
+    <Flex
+      w="35%"
+      h="100%"
+      bg="#6A220C"
+      align="center"
+      justify="center"
+      direction="column"
+      p={10}
+    >
+      <Heading mb={100} textAlign="center" pb={50}>
+        Already have an account?
+      </Heading>
+      <Button
+        bg="#C04116"
+        rounded="full"
+        paddingX="10"
+        color="white"
+        onClick={() => navigate("/login")}
+      >
+        Login
+      </Button>
+    </Flex>
+  </Flex>
+</Flex>
+
   );
 }
 
