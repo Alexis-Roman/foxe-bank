@@ -5,6 +5,8 @@ import java.time.LocalDate;
 public class SignupRequest {
     private String name;
     private String email;
+
+    private String number;
     private LocalDate birthday;
 
     private String password;
@@ -14,9 +16,10 @@ public class SignupRequest {
     public SignupRequest() {
     }
 
-    public SignupRequest(String name, String email, LocalDate birthday, String password, String confirmPassword) {
+    public SignupRequest(String name, String email, String number, LocalDate birthday, String password, String confirmPassword) {
         this.name = name;
         this.email = email;
+        this.number = number;
         this.birthday = birthday;
         this.password = password;
         this.confirmPassword = confirmPassword;
@@ -30,7 +33,9 @@ public class SignupRequest {
     public String getEmail() {
         return email;
     }
-
+    public String getNumber() {
+        return number;
+    }
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -48,7 +53,9 @@ public class SignupRequest {
     public void setName(String name) {
         this.name = name;
     }
-
+    public void setNumber(String number) {
+        this.number = number;
+    }
     public void setEmail(String email) {
         this.email = email;
     }

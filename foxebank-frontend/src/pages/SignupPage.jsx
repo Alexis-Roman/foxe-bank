@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 function SignupPage() {
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
+  const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,6 +25,7 @@ function SignupPage() {
       return;
     }
 
+    //FETCH REQUEST TO BACKEND
     try {
       const res = await fetch("http://localhost:8080/api/auth/signup", {
         method: "POST",
@@ -32,6 +34,7 @@ function SignupPage() {
           name: username,
           birthday,
           email,
+          number,
           password,
           confirmPassword,
         }),
@@ -88,7 +91,7 @@ function SignupPage() {
         <Heading>Sign Up</Heading>
 
         <Field.Root>
-          <Field.Label>Username</Field.Label>
+          <Field.Label>Full name</Field.Label>
           <Input
             placeholder="Enter username"
             value={username}
@@ -102,6 +105,20 @@ function SignupPage() {
             placeholder="me@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </Field.Root>
+
+        <Field.Root>
+          <Field.Label>Phone Number</Field.Label>
+          <Input
+            type="tel"
+            placeholder="Enter phone number"
+            value={number}
+            onChange={(e) => {
+              const digitsOnly = e.target.value.replace(/\D/g, ""); // remove non-numeric
+              setNumber(digitsOnly);
+            }}
+            maxLength={11} // optional (for 11-digit PH numbers)
           />
         </Field.Root>
 

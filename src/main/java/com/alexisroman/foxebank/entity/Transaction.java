@@ -72,7 +72,7 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public void setSender(User user) {
+    public void setSender(User sender) {
         this.sender = sender;
     }
 

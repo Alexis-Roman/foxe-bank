@@ -12,15 +12,17 @@ public class User {
     private Long userId;
     private String name;
     private String email;
+    private String number;
     private LocalDate birthday;
     private String password;
     private Double balance;
 
     public User(){}
 
-    public User(String name, String email, LocalDate birthday, String password, Double balance) {
+    public User(String name, String email, String number, LocalDate birthday, String password, Double balance) {
         this.name = name;
         this.email = email;
+        this.number = number;
         this.birthday = birthday;
         this.password = password;
         this.balance = balance;
@@ -37,6 +39,9 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+    public String getNumber() {
+        return number;
     }
 
     public LocalDate getBirthday() {
@@ -62,6 +67,10 @@ public class User {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setBalance(Double balance) {
