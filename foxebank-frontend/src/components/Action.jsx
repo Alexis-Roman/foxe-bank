@@ -31,7 +31,7 @@ function Action() {
           <Button
             colorScheme="gray"
             w="150px"
-            onClick={() => alert("Request Money feature coming soon!")}
+            onClick={() => navigate("/receiveMoney")} // matches App.jsx route below
           >
             Request Money
           </Button>

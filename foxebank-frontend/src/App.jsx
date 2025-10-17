@@ -1,11 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import LandingPage from './pages/LandingPage';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import SendMoney from './components/SendMoney';
+import Settings from './pages/SettingsPage';
 import TransactionPage from './pages/TransactionPage';
+import ReceiveMoneyPage from './pages/ReceiveMoneyPage';
+import InboxPage from './pages/InboxPage';
+
 import { Toaster, toaster } from "@/components/ui/toaster"
 
 import History from './components/history';
@@ -25,7 +30,10 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/sendmoney" element={<SendMoney />} />
         <Route path="/history" element={<History />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/transactions" element={<TransactionPage />} />
+        <Route path="/receiveMoney" element={<ReceiveMoneyPage />} />
+        <Route path="/inbox" element={<InboxPage />} />
       </Routes>
     </Router>
 

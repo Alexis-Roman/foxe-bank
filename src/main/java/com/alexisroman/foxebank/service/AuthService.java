@@ -46,7 +46,7 @@ public class AuthService {
         User user   = new User(
                 request.getName(),
                 request.getEmail(),
-                request.getPassword(),
+                request.getNumber(),
                 request.getBirthday(),
                 hashedPass,
                 0.0

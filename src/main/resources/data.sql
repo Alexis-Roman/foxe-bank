@@ -1,5 +1,6 @@
-INSERT INTO users (name, birthday, email, password, balance)
-VALUES ('Alexis', '2001-03-15', 'alexis@mail.com', 'pass123', 500.00);
+SELECT * FROM foxebankdb.users LIMIT 0, 1000;
+SELECT * FROM foxebankdb.transactions LIMIT 0, 1000;
+UPDATE users
+SET number = '09285763028'
+WHERE customer_id = 1;
 
-INSERT INTO users (name, birthday, email, password, balance)
-VALUES ('Cabbage', '2002-07-12', 'cabbage@gmail.com', 'pass456', 200.00);

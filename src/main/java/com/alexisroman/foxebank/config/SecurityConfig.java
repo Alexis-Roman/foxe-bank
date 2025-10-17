@@ -15,7 +15,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // disable CSRF for simplicity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // allow signup & login
+                        .requestMatchers(
+                                "/api/auth/**",         // allow login/signup/logout
+                                "/api/transaction/**",  // allow cash in/out/history
+                                "/api/users/**"         // allow fetching user info
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login.disable()) // disable default login form
@@ -23,6 +27,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -43,6 +43,16 @@ export default function Sidebar() {
           justifyContent="center"
           bg="gray.700"
           _hover={{ bg: "gray.600" }}
+          onClick={() => navigate("/inbox")}
+        >
+          Inbox
+        </Button>
+
+        <Button
+          w="full"
+          justifyContent="center"
+          bg="gray.700"
+          _hover={{ bg: "gray.600" }}
           onClick={() => navigate("/transactions")}
         >
           Transactions
@@ -51,6 +61,16 @@ export default function Sidebar() {
 
       {/* Bottom Section */}
       <Box>
+        <Button
+          w="full"
+          mb={2}
+          justifyContent="center"
+          bg="gray.700"
+          _hover={{ bg: "gray.600" }}
+          onClick={() => navigate("/settings")}
+        >
+          Settings
+        </Button>
         <Button
           w="full"
           justifyContent="center"

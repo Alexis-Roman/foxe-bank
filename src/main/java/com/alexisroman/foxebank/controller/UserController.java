@@ -1,50 +1,33 @@
 package com.alexisroman.foxebank.controller;
 
-import com.alexisroman.foxebank.dto.TransactionResponse;
 import com.alexisroman.foxebank.entity.User;
 import com.alexisroman.foxebank.service.BankingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.alexisroman.foxebank.dto.TransactionResponse;
 
-import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:5173/")
 @RestController
-@RequestMapping("/api/transaction")
+@RequestMapping("/api/users")
 public class UserController {
+
     @Autowired
     private BankingService bankingService;
 
-    //CASH IN
-    @PostMapping("/{receiverId}/cashin")
-    public  String cashIn (@PathVariable Long receiverId, @RequestParam Long senderId, @RequestParam Double amount){
-        bankingService.cashIn(receiverId, senderId, amount);
-        return "Cash In successful! You received ₱" + amount
-                + " from user " + senderId;
-    }
-
-    //CASH OUT
-    @PostMapping("/{senderId}/cashout")
-    public  String cashOut (@PathVariable Long senderId, @RequestParam Long receiverId, @RequestParam Double amount){
-        bankingService.cashOut(senderId, receiverId, amount);
-        return "Cash Out successful! You sent ₱" + amount
-                + " to user " + receiverId;
-    }
-
-    @GetMapping("/history/{userId}")
-    public List<TransactionResponse> getTransactionHistory(@PathVariable Long userId) {
-        return bankingService.getUserTransactions(userId);
-    }
-
-    @GetMapping("/users/{userId}")
-    public User getUser(@PathVariable Long userId) {
-        return bankingService.getUserById(userId);
-    }
-
     // Get user info by ID
-    @GetMapping("/api/users/{userId}")
+    @GetMapping("/{userId}")
     public User getUserById(@PathVariable Long userId) {
         return bankingService.getUserById(userId);
     }
+    @GetMapping("/findByNumber/{number}")
+    public ResponseEntity<User> getUserByNumber(@PathVariable String number) {
+        User user = bankingService.getUserByNumber(number);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
