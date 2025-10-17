@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Flex, Box, Heading, Button, Text, Input, VStack } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import LandingContent from "@/components/LandingContent";
 import Footer from "../components/Footer";
 
 function LandingPage() {
@@ -14,21 +15,7 @@ function LandingPage() {
         <Navbar />
       </Box>
 
-      {/* Main Content */}
-      <Flex flex="1" align="center" justify="center">
-        <VStack spacing={6} textAlign="center">
-          <Heading fontSize="4xl">Welcome to FoxeBank 🦊</Heading>
-          <Text fontSize="lg">Please log in or sign up to continue</Text>
-          <Flex gap={4}>
-            <Button colorScheme="red" onClick={() => navigate("/login")}>
-              Login
-            </Button>
-            <Button colorScheme="red" onClick={() => navigate("/signup")}>
-              Sign Up
-            </Button>
-          </Flex>
-        </VStack>
-      </Flex>
+      <LandingContent />
 
       {/* Full-width Footer */}
       <Flex w="100%" align="center" justify="center" py={4} bg="#340C04">

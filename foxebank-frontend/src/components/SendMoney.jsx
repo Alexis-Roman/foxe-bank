@@ -4,7 +4,7 @@ import { Box, Heading, Text, Button, VStack, Input } from "@chakra-ui/react"
 import { Toaster, toaster } from "@/components/ui/toaster"
 
 function SendMoney() {
-  const [accountNumber, setAccountNumber] = useState("")
+  const [mobileNumber, setMobileNumber] = useState("")
   const [recipientName, setRecipientName] = useState("")
   const [amount, setAmount] = useState("")
   const navigate = useNavigate()
@@ -12,13 +12,13 @@ function SendMoney() {
   const handleSend = async () => {
     try {
       const senderId = localStorage.getItem("userId") // stored at login
-      const receiverId = accountNumber.trim()
+      const receiverNumber = mobileNumber.trim()
       const amt = parseFloat(amount)
 
-      if (!receiverId || !amt || amt <= 0) {
+      if (!receiverNumber || !amt || amt <= 0) {
         toaster.create({
           title: "Invalid input",
-          description: "Please enter a valid account and amount.",
+          description: "Please enter a valid mobile number and amount.",
           type: "error",
           duration: 2500,
         })
@@ -26,26 +26,23 @@ function SendMoney() {
       }
 
       const response = await fetch(
-        `http://localhost:8080/api/transaction/${senderId}/cashout?receiverId=${receiverId}&amount=${amt}`,
+        `http://localhost:8080/api/transaction/${senderId}/cashout?receiverNumber=${receiverNumber}&amount=${amt}`,
         { method: "POST" }
       )
 
       const text = await response.text()
 
       if (response.ok) {
-        // Success toast
         toaster.create({
           title: "Transaction Successful!",
-          description: `You sent ₱${amt.toLocaleString()} to ${recipientName || receiverId}`,
+          description: `You sent ₱${amt.toLocaleString()} to ${recipientName || receiverNumber}`,
           type: "success",
           duration: 2500,
         })
 
-        // Update local balance
         const currentBalance = parseFloat(localStorage.getItem("balance")) || 0
         localStorage.setItem("balance", currentBalance - amt)
 
-        // Redirect
         setTimeout(() => navigate("/dashboard"), 1800)
       } else {
         toaster.create({
@@ -75,11 +72,11 @@ function SendMoney() {
         </Text>
 
         <Box>
-          <Text fontWeight="medium" mb={1}>Account Number</Text>
+          <Text fontWeight="medium" mb={1}>Mobile Number</Text>
           <Input
-            placeholder="Enter account number"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value)}
+            placeholder="Enter recipient mobile number"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
           />
         </Box>
 

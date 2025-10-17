@@ -46,9 +46,9 @@ public class BankingService {
 
     // --- CASH OUT ---
     @Transactional
-    public void cashOut(Long senderId, Long receiverId, Double amount) {
+    public void cashOut(Long senderId, String receiverNumber, Double amount) {
         User sender = userRep.findById(senderId).orElseThrow();
-        User receiver = userRep.findById(receiverId).orElseThrow();
+        User receiver = userRep.findByNumber(receiverNumber).orElseThrow();
 
         if (sender.getBalance() < amount) {
             throw new IllegalArgumentException("Insufficient balance.");

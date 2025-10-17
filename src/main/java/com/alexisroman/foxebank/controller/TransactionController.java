@@ -33,11 +33,11 @@ public class TransactionController {
     @PostMapping("/{senderId}/cashout")
     public ResponseEntity<String> cashOut(
             @PathVariable Long senderId,
-            @RequestParam Long receiverId,
+            @RequestParam String receiverNumber,
             @RequestParam Double amount
     ) {
-        bankingService.cashOut(senderId, receiverId, amount);
-        return ResponseEntity.ok("Cash Out successful! You sent ₱" + amount + " to user " + receiverId);
+        bankingService.cashOut(senderId, receiverNumber, amount);
+        return ResponseEntity.ok("Cash Out successful! You sent ₱" + amount + " to user " + receiverNumber);
     }
 
     // --- TRANSACTION HISTORY ---
