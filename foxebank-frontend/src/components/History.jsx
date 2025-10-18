@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, Heading, Text, Spinner } from "@chakra-ui/react";
+import { Box, Heading, Text, Spinner, Flex } from "@chakra-ui/react";
 
 export default function History() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Get userId from localStorage
   const userId = localStorage.getItem("userId"); 
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(`http://localhost:8080/api/transaction/history/${userId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
+        if (!response.ok) throw new Error("Failed to fetch transactions");
         const data = await response.json();
         setTransactions(data);
       } catch (error) {
@@ -23,7 +20,6 @@ export default function History() {
         setLoading(false);
       }
     };
-
     fetchTransactions();
   }, [userId]);
 
@@ -45,30 +41,35 @@ export default function History() {
 
   if (loading) {
     return (
-      <Box h="100vh" display="flex" justifyContent="center" alignItems="center">
+      <Flex h="100vh" justify="center" align="center" bg="gray.900">
         <Spinner size="xl" color="white" />
-      </Box>
+      </Flex>
     );
   }
 
   return (
-    <Box
-      h="100vh"
-      w="100vw"
+    <Flex
+      flex="1"
+      direction="column"
       bg="gray.900"
       color="white"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      p={8}
+      p={6}
+      overflow="hidden" // prevent outer scroll
     >
-      <Box w="full" maxW="1200px">
-        <Heading size="lg" mb={6}>
-          Transaction History
-        </Heading>
+      <Heading size="lg" mb={6}>
+        Transaction History
+      </Heading>
 
-        <Box bg="gray.800" borderRadius="lg" p={4} overflowX="auto" boxShadow="lg">
-          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 850 }}>
+      <Box
+        flex="1"
+        bg="gray.800"
+        borderRadius="lg"
+        p={4}
+        overflowY="auto" // vertical scroll if needed
+        boxShadow="lg"
+      >
+        <Box minW="850px"> {/* table min width */}
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr>
                 <th style={thStyle}>Reference No.</th>
@@ -91,7 +92,6 @@ export default function History() {
                     <Text
                       as="span"
                       fontWeight="bold"
-                      color={txn.action === "Received" ? "green.400" : "yellow.400"}
                     >
                       {txn.action}
                     </Text>
@@ -100,10 +100,9 @@ export default function History() {
                 </tr>
               ))}
             </tbody>
-
           </table>
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 }

@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { Flex, VStack, Heading, Input, Button, Text } from "@chakra-ui/react";
-import { Field } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Flex,
+  VStack,
+  Heading,
+  Text,
+  Input,
+  Button,
+  CloseButton,
+} from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import Sidebar from "@/components/Sidebar";
 
 function ReceiveMoneyPage() {
   const [step, setStep] = useState(1);
   const [number, setNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   // Step 1 → Fetch user info
   const handleNext = async () => {
@@ -23,17 +32,13 @@ function ReceiveMoneyPage() {
     }
 
     try {
-      // Later replace with your actual backend endpoint
-      const response = await fetch(`http://localhost:8080/api/users/findByNumber/${number}`);
+      const response = await fetch(
+        `http://localhost:8080/api/users/findByNumber/${number}`
+      );
       if (!response.ok) throw new Error("User not found");
 
       const data = await response.json();
-      setUserData({
-        name: data.name,
-        number: number,
-        amount: amount,
-      });
-
+      setUserData({ name: data.name, number, amount });
       setStep(2);
     } catch (error) {
       toaster.create({
@@ -49,12 +54,11 @@ function ReceiveMoneyPage() {
   const handleSendRequest = async () => {
     try {
       const requesterId = localStorage.getItem("userId");
-
       const response = await fetch("http://localhost:8080/api/transaction/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          requesterId: requesterId,
+          requesterId,
           receiverNumber: userData.number,
           amount: parseFloat(userData.amount),
         }),
@@ -85,83 +89,120 @@ function ReceiveMoneyPage() {
   };
 
   return (
-    <Flex direction="column" h="100vh">
+    <Flex
+      minH="100vh"
+      justify="center"
+      align="center"
+      bg="gray.900"
+      color="white"
+      px={4}
+    >
+      <Box
+        position="relative"
+        maxW="md"
+        w="100%"
+        borderRadius="lg"
+        overflow="hidden"
+        boxShadow="2xl"
+      >
+        {/* Header Section (Fully Orange) */}
+        <Box bg="#ED960B" p={6} textAlign="center" position="relative">
+          <CloseButton
+            position="absolute"
+            top="10px"
+            left="10px"
+            color="white"
+            bg="transparent"
+            size="lg"
+            onClick={() => navigate("/dashboard")}
+          />
+          <Heading size="lg" color="white">
+            {step === 1 ? "Request Money" : "Confirm Request"}
+          </Heading>
+        </Box>
 
-      <Flex flex="1" align="center" justify="center" bg="gray.700" color="white" p={10}>
-        {step === 1 ? (
-          <VStack spacing={5} w="full" maxW="400px">
-            <Heading size="lg" mb={5}>
-              Request Money
-            </Heading>
+        {/* Content Section */}
+        <Box bg="gray.800" p={6}>
+          <VStack spacing={4} align="stretch">
+            {step === 1 ? (
+              <>
+                <Text textAlign="center" color="gray.400">
+                  Request funds securely from another account
+                </Text>
 
-            <Field.Root>
-              <Field.Label>Sender’s Number</Field.Label>
-              <Input
-                type="number"
-                placeholder="Enter user number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-              />
-            </Field.Root>
+                <Box>
+                  <Text fontWeight="medium" mb={1}>
+                    Sender’s Number
+                  </Text>
+                  <Input
+                    type="number"
+                    placeholder="Enter sender’s number"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                  />
+                </Box>
 
-            <Field.Root>
-              <Field.Label>Amount (₱)</Field.Label>
-              <Input
-                type="number"
-                placeholder="Enter amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </Field.Root>
+                <Box>
+                  <Text fontWeight="medium" mb={1}>
+                    Amount (₱)
+                  </Text>
+                  <Input
+                    type="number"
+                    placeholder="Enter amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </Box>
 
-            <Button
-              bg="#6A220C"
-              color="white"
-              rounded="full"
-              w="full"
-              onClick={handleNext}
-            >
-              Next
-            </Button>
+                <Button
+                  bg="#ED960B"
+                  color="white"
+                  _hover={{ bg: "#C04116", color: "black" }}
+                  size="md"
+                  mt={4}
+                  onClick={handleNext}
+                >
+                  Next
+                </Button>
+              </>
+            ) : (
+              <>
+                <Text>
+                  <b>Name:</b> {userData.name}
+                </Text>
+                <Text>
+                  <b>Number:</b> {userData.number}
+                </Text>
+                <Text>
+                  <b>Amount:</b> ₱{userData.amount}
+                </Text>
+
+                <Button
+                  bg="#C04116"
+                  color="white"
+                  _hover={{ bg: "#ED960B", color: "black" }}
+                  size="md"
+                  mt={4}
+                  onClick={handleSendRequest}
+                >
+                  Send Request
+                </Button>
+
+                <Button
+                  bg="gray.600"
+                  color="white"
+                  _hover={{ bg: "#6A220C" }}
+                  rounded="full"
+                  w="full"
+                  onClick={() => setStep(1)}
+                >
+                  Back
+                </Button>
+              </>
+            )}
           </VStack>
-        ) : (
-          <VStack spacing={5} w="full" maxW="400px">
-            <Heading size="lg" mb={5}>
-              Confirm Request
-            </Heading>
-
-            <Text>
-              <b>Name:</b> {userData.name}
-            </Text>
-            <Text>
-              <b>Number:</b> {userData.number}
-            </Text>
-            <Text>
-              <b>Amount:</b> ₱{userData.amount}
-            </Text>
-
-            <Button
-              bg="#6A220C"
-              color="white"
-              rounded="full"
-              w="full"
-              onClick={handleSendRequest}
-            >
-              Send Request
-            </Button>
-
-            <Button
-              bg="gray.500"
-              color="white"
-              rounded="full"
-              w="full"
-              onClick={() => setStep(1)}
-            >
-              Back
-            </Button>
-          </VStack>
-        )}
-      </Flex>
+        </Box>
+      </Box>
     </Flex>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Flex, Box, VStack, Spinner, Text } from "@chakra-ui/react";
 import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar"; // add navbar
 import MessageBanner from "@/components/MessageBanner";
 import MessageDetail from "@/components/MessageDetail";
 
@@ -42,7 +43,6 @@ export default function InboxPage() {
     fetchInbox();
   }, [userId]);
 
-  // Accept or decline via backend endpoint
   const respondToRequest = async (requestId, accept) => {
     try {
       console.log(`Calling respondToRequest id=${requestId} accept=${accept}`);
@@ -50,20 +50,14 @@ export default function InboxPage() {
         `http://localhost:8080/api/transaction/request/${requestId}/respond?accept=${accept}`,
         { method: "POST" }
       );
-      console.log("respondToRequest status:", res.status);
       if (!res.ok) {
         const txt = await res.text();
         console.error("Backend responded with error:", res.status, txt);
-        // Optional: surface to user with a toast
         return false;
       }
 
-      // success: remove request locally (safer) and clear selection
       setRequests(prev => prev.filter(r => r.requestId !== requestId));
       setSelected(null);
-
-      // optional: refetch balances / inbox to be 100% sure
-      // await fetchInbox();
 
       return true;
     } catch (err) {
@@ -84,35 +78,40 @@ export default function InboxPage() {
   }
 
   return (
-    <Flex minH="100vh" bg="gray.900" color="white">
-      <Sidebar />
+    <Flex direction="column" minH="100vh" bg="gray.900" color="white">
+      {/* Navbar at top */}
+      <Navbar hideAuthButtons /> {/* pass a prop to hide login/signup if needed */}
 
-      {selected ? (
-        <Box flex="1" p={6} w="70%">
-          <MessageDetail
-            request={selected}
-            onAccept={handleAccept}
-            onDecline={handleDecline}
-            onClose={() => setSelected(null)}
-          />
-        </Box>
-      ) : (
-        <Box flex="1" p={6}>
-          <VStack spacing={4} align="stretch">
-            {requests.length > 0 ? (
-              requests.map(req => (
-                <Box key={req.requestId} onClick={() => setSelected(req)} cursor="pointer">
-                  <MessageBanner request={req} />
-                </Box>
-              ))
-            ) : (
-              <Text color="gray.400" textAlign="center">
-                No new money requests.
-              </Text>
-            )}
-          </VStack>
-        </Box>
-      )}
+      <Flex flex="1">
+        <Sidebar />
+
+        {selected ? (
+          <Box flex="1" p={6} w="70%">
+            <MessageDetail
+              request={selected}
+              onAccept={handleAccept}
+              onDecline={handleDecline}
+              onClose={() => setSelected(null)}
+            />
+          </Box>
+        ) : (
+          <Box flex="1" p={6}>
+            <VStack spacing={4} align="stretch">
+              {requests.length > 0 ? (
+                requests.map(req => (
+                  <Box key={req.requestId} onClick={() => setSelected(req)} cursor="pointer">
+                    <MessageBanner request={req} />
+                  </Box>
+                ))
+              ) : (
+                <Text color="gray.400" textAlign="center">
+                  No new money requests.
+                </Text>
+              )}
+            </VStack>
+          </Box>
+        )}
+      </Flex>
     </Flex>
   );
 }

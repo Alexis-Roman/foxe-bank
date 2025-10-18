@@ -1,20 +1,35 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, VStack, Button, Heading } from "@chakra-ui/react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Box, VStack, Button } from "@chakra-ui/react";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.clear(); // remove all stored user data
-    navigate("/"); // redirect to login page
+    localStorage.clear();
+    navigate("/");
   };
+
+  const isActive = (path) => location.pathname === path;
+
+  const buttonProps = (path) => ({
+    w: "full",
+    justifyContent: "center",
+    bg: isActive(path) ? "#C04116" : "#6A220C",
+    color: "white",
+    _hover: {
+      bg: isActive(path) ? "#ED960B" : "#C04116",
+    },
+    transition: "0.2s ease",
+    onClick: () => navigate(path),
+  });
 
   return (
     <Box
-      h="100vh"
+      h="93.2vh"
       w="320px"
-      bg="gray.800"
+      bg="#6A220C"
       color="white"
       display="flex"
       flexDirection="column"
@@ -23,50 +38,21 @@ export default function Sidebar() {
       boxShadow="xl"
     >
       {/* Top Section */}
-      <VStack align="start" spacing={6}>
-        <Heading size="md" mb={4}>
-          🦊 FoxeBank
-        </Heading>
-
-        <Button
-          w="full"
-          justifyContent="center"
-          bg="gray.700"
-          _hover={{ bg: "gray.600" }}
-          onClick={() => navigate("/dashboard")}
-        >
-          Dashboard
-        </Button>
-
-        <Button
-          w="full"
-          justifyContent="center"
-          bg="gray.700"
-          _hover={{ bg: "gray.600" }}
-          onClick={() => navigate("/inbox")}
-        >
-          Inbox
-        </Button>
-
-        <Button
-          w="full"
-          justifyContent="center"
-          bg="gray.700"
-          _hover={{ bg: "gray.600" }}
-          onClick={() => navigate("/transactions")}
-        >
-          Transactions
-        </Button>
+      <VStack align="start" spacing={4}>
+        <Button {...buttonProps("/dashboard")}>Dashboard</Button>
+        <Button {...buttonProps("/inbox")}>Inbox</Button>
+        <Button {...buttonProps("/transactions")}>Transactions</Button>
       </VStack>
 
       {/* Bottom Section */}
       <Box>
         <Button
           w="full"
-          mb={2}
+          mb={3}
           justifyContent="center"
-          bg="gray.700"
-          _hover={{ bg: "gray.600" }}
+          bg="#C04116"
+          color="white"
+          _hover={{ bg: "#ED960B" }}
           onClick={() => navigate("/settings")}
         >
           Settings
@@ -74,8 +60,9 @@ export default function Sidebar() {
         <Button
           w="full"
           justifyContent="center"
-          colorScheme="red"
-          variant="solid"
+          bg="#ED960B"
+          color="black"
+          _hover={{ bg: "#C04116", color: "white" }}
           onClick={handleLogout}
         >
           Logout
